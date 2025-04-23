@@ -1,12 +1,13 @@
 ﻿import cls from './MainLayout.module.css';
 import { Outlet } from 'react-router-dom';
+import { Header } from '../Header';
 
 export function MainLayout() {
     const currentYear: number = new Date().getFullYear();
 
     return (
         <div className={cls.mainLayout}>
-            <header>Header</header>
+            <Header />
             <div className={cls.mainWrapper}>
                 <main className={cls.main}>
                     <Outlet />
