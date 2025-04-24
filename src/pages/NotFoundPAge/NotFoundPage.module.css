@@ -1,0 +1,10 @@
+﻿.title {
+    width: fit-content;
+    margin: 50px auto;
+}
+
+.errorCode {
+    width: fit-content;
+    margin: 20px auto;
+    font-size: 80px;
+}

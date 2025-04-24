@@ -1,6 +1,7 @@
 import { MainLayout } from './components/MainLayout';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
+import { NotFoundPage } from './pages/NotFoundPAge';
 
 export function App() {
     return (
@@ -11,6 +12,8 @@ export function App() {
                     <Route path="/forbidden" element={<div>Forbidden!!!</div>} />
                     <Route path="/addquestion" element={<div>Adding question</div>} />
                     <Route path="/question/:id" element={<div>🍎 QUESTION PAGE 🍏</div>} />
+
+                    <Route path="*" element={<NotFoundPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
