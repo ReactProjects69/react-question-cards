@@ -1,9 +1,9 @@
 ﻿/*
 import cls from './HomePage.module.css';
 */
-import { QuestionCard } from '../../components/QuestionCard';
 import { API_URL } from '../../constants';
 import { useEffect, useState } from 'react';
+import { QuestionCardList } from '../../components/QuestionCardList';
 
 export function HomePage() {
     const [questions, setQuestions] = useState([]);
@@ -25,9 +25,7 @@ export function HomePage() {
 
     return (
         <>
-            {questions.map((card, index) => {
-                return <QuestionCard card={card} key={index} />;
-            })}
+            <QuestionCardList cards={questions} />
         </>
     );
 }
