@@ -1,12 +1,11 @@
-﻿/*
-import cls from './HomePage.module.css';
-*/
+﻿import cls from './HomePage.module.css';
 import { API_URL } from '../../constants';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { QuestionCardList } from '../../components/QuestionCardList';
 import { Loader } from '../../components/Loader';
 import { useFetch } from '../../hooks/useFetch.ts';
 import { QuestionCardType } from '../../models/QuestionCardType.ts';
+import { SearchInput } from '../../components/SearchInput';
 
 export function HomePage() {
     const [questions, setQuestions] = useState<QuestionCardType[]>([]);
@@ -31,8 +30,9 @@ export function HomePage() {
 
     return (
         <>
-            <input type={'text'} value={search} onChange={onSearchChangeHandler} />
-
+            <div className={cls.controlsContainer}>
+                <SearchInput value={search} onChange={onSearchChangeHandler} />
+            </div>
             {isLoading && <Loader />}
             {error && <p>{error}</p>}
             <QuestionCardList cards={questions} />

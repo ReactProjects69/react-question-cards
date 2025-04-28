@@ -19,6 +19,7 @@ export default defineConfig([
         extends: ['js/recommended'],
         rules: {
             '@typescript-eslint/no-explicit-any': 'warn',
+            '@typescript-eslint/no-unused-vars': 'warn',
             'react/prop-types': 'warn',
             'react/jsx-no-target-blank': 'warn',
             'react/react-in-jsx-scope': 'off',
