@@ -2,43 +2,37 @@
 import cls from './HomePage.module.css';
 */
 import { API_URL } from '../../constants';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { QuestionCardList } from '../../components/QuestionCardList';
 import { Loader } from '../../components/Loader';
 import { useFetch } from '../../hooks/useFetch.ts';
+import { QuestionCardType } from '../../models/QuestionCardType.ts';
 
 export function HomePage() {
-    const [questions, setQuestions] = useState([]);
+    const [questions, setQuestions] = useState<QuestionCardType[]>([]);
+    const [search, setSearch] = useState('');
 
     const [getQuestions, isLoading, error] = useFetch(async (url) => {
         const response = await fetch(`${API_URL}/${url}`);
-        const questions = await response.json();
+        const questions: QuestionCardType[] = await response.json();
 
         setQuestions(questions);
         return questions;
     });
 
-    /*const _getQuestions = async () => {
-        try {
-            setIsLoading(true);
-            await delayFn();
-            const response = await fetch(`${API_URL}/react`);
-            const questions = await response.json();
-            setQuestions(questions);
-            console.log(response);
-        } catch (e) {
-            console.error(e);
-        } finally {
-            setIsLoading(false);
-        }
-    };*/
-
     useEffect(() => {
         getQuestions('react');
     }, []);
 
+    const onSearchChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target.value);
+        setSearch(e.target.value);
+    };
+
     return (
         <>
+            <input type={'text'} value={search} onChange={onSearchChangeHandler} />
+
             {isLoading && <Loader />}
             {error && <p>{error}</p>}
             <QuestionCardList cards={questions} />

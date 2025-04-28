@@ -22,6 +22,7 @@ export default defineConfig([
             'react/prop-types': 'warn',
             'react/jsx-no-target-blank': 'warn',
             'react/react-in-jsx-scope': 'off',
+            'react/display-name': 'warn',
             'prettier/prettier': [
                 'error',
                 {
