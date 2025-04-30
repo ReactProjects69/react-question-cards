@@ -10,6 +10,7 @@ import { SearchInput } from '../../components/SearchInput';
 import { PaginationResult } from '../../models/PaginationResult.ts';
 import { Button } from '../../components/Button';
 import { databaseQueryFactory } from '../../helpers/databaseQueryFactory.ts';
+import { Selector } from '../../components/Selector';
 
 const DEFAULT_PER_PAGE = 10;
 
@@ -96,32 +97,32 @@ export function HomePage() {
             <div className={cls.controlsContainer} ref={controlsContainerRef}>
                 <SearchInput value={search} onChange={onSearchChangeHandler} />
 
-                <select
-                    value={sortSelectValue}
+                <Selector
+                    header={'sort By'}
+                    headerDisabled={false}
                     onChange={onSortChangeHandler}
-                    className={cls.select}
-                >
-                    <option value="">sort By</option>
-                    <hr />
-                    <option value={`_sort=level`}>level ASC</option>
-                    <option value={`_sort=-level`}>level DESC</option>
-                    <option value={`_sort=completed`}>completed ASC</option>
-                    <option value={`_sort=-completed`}>completed DESC</option>
-                </select>
+                    options={[
+                        { value: '_sort=level', content: 'level ASC' },
+                        { value: '_sort=-level', content: 'level DESC' },
+                        { value: '_sort=completed', content: 'completed ASC' },
+                        { value: '_sort=-completed', content: 'completed DESC' },
+                    ]}
+                    value={sortSelectValue}
+                />
 
-                <select
-                    value={countSelectValue}
+                <Selector
+                    header={'count'}
+                    headerDisabled={true}
                     onChange={onCountSelectChangeHandler}
-                    className={cls.select}
-                >
-                    <option disabled>count</option>
-                    <hr />
-                    <option value={'10'}>10</option>
-                    <option value={'20'}>20</option>
-                    <option value={'30'}>30</option>
-                    <option value={'50'}>50</option>
-                    <option value={'100'}>100</option>
-                </select>
+                    options={[
+                        { value: '10', content: '10' },
+                        { value: '20', content: '20' },
+                        { value: '30', content: '30' },
+                        { value: '50', content: '50' },
+                        { value: '100', content: '100' },
+                    ]}
+                    value={countSelectValue}
+                />
             </div>
             {isLoading && <Loader />}
             {error && <p>{error}</p>}
