@@ -1,5 +1,6 @@
 ﻿import { useState } from 'react';
 import { delayFn } from '../helpers/delayFn.tsx';
+import { toast } from 'react-toastify';
 
 // Тип для функции обратного вызова
 type CallbackFunction<T, TP> = (arg: TP) => Promise<T>;
@@ -30,6 +31,7 @@ export const useFetch = <T, TP>(callback: CallbackFunction<T, TP>): UseFetchRetu
         } catch (e) {
             const errorMessage = e instanceof Error ? e.message : 'Unknown error occurred';
             setError(errorMessage);
+            toast.error(errorMessage);
             return undefined;
         } finally {
             setIsLoading(false);
