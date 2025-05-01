@@ -2,13 +2,13 @@
 import { delayFn } from '../helpers/delayFn.tsx';
 
 // Тип для функции обратного вызова
-type CallbackFunction<T> = (url: string) => Promise<T>;
+type CallbackFunction<T, TP> = (arg: TP) => Promise<T>;
 
 // Тип возвращаемого значения из хука
-type UseFetchReturn<T> = [
-    fetchFunction: (arg: any) => Promise<T | undefined>,
+type UseFetchReturn<T, TP> = [
+    fetchFunction: (arg: TP) => Promise<T | undefined>,
     isLoading: boolean,
-    error: string,
+    error: string | null,
 ];
 
 /**
@@ -16,14 +16,14 @@ type UseFetchReturn<T> = [
  * @param callback - Функция для выполнения запроса
  * @returns Кортеж с функцией запроса, состоянием загрузки и ошибкой
  */
-export const useFetch = <T>(callback: CallbackFunction<T>): UseFetchReturn<T> => {
+export const useFetch = <T, TP>(callback: CallbackFunction<T, TP>): UseFetchReturn<T, TP> => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string>('');
+    const [error, setError] = useState<string | null>(null);
 
-    const fetchFn = async (arg: string): Promise<T | undefined> => {
+    const fetchFn = async (arg: TP): Promise<T | undefined> => {
         try {
             setIsLoading(true);
-            setError('');
+            setError(null);
             await delayFn();
 
             return await callback(arg);

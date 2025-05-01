@@ -30,9 +30,9 @@ export function QuestionCard({ card }: QuestionCardProps) {
             <div className={cls.cardAnswers}>
                 <label>Short Answers</label>
                 <p className={cls.cardAnswer}>{card.answer}</p>
-
-                <Button onClick={() => navigate(`/question/${card.id}`)}>View</Button>
             </div>
+
+            <Button onClick={() => navigate(`/question/${card.id}`)}>View</Button>
         </div>
     );
 }

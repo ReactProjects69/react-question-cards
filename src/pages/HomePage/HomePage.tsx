@@ -71,9 +71,6 @@ export function HomePage() {
 
     const paginationHandler = (e: React.MouseEvent<HTMLDivElement>) => {
         const target = e.target as HTMLElement;
-
-        console.log(target.textContent);
-
         if (target.tagName === 'BUTTON') {
             setSearchParams(
                 databaseQueryFactory(
