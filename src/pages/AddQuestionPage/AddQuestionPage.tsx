@@ -5,6 +5,7 @@ import { useActionState } from 'react';
 import { delayFn } from '../../helpers/delayFn.tsx';
 import { toast } from 'react-toastify';
 import { API_URL } from '../../constants';
+import { Loader } from '../../components/Loader';
 
 type FormState = {
     clearForm?: boolean;
@@ -57,6 +58,10 @@ export function AddQuestionPage() {
             clearForm: true,
         },
     );
+
+    if (isPending) {
+        return <Loader />;
+    }
 
     return (
         <>
@@ -111,7 +116,6 @@ export function AddQuestionPage() {
                             id="resourcesField"
                             cols={30}
                             rows={5}
-                            required={true}
                             placeholder="Enter Resources separated by commas"
                         ></textarea>
                     </div>
