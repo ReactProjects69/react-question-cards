@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
 import { NotFoundPage } from './pages/NotFoundPAge';
 import { QuestionPage } from './pages/QuestionPage';
+import { AddQuestionPage } from './pages/AddQuestionPage';
 
 export function App() {
     return (
@@ -11,7 +12,7 @@ export function App() {
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/forbidden" element={<div>Forbidden!!!</div>} />
-                    <Route path="/addquestion" element={<div>Adding question</div>} />
+                    <Route path="/addquestion" element={<AddQuestionPage />} />
                     <Route path="/question/:id" element={<QuestionPage />} />
 
                     <Route path="*" element={<NotFoundPage />} />

@@ -26,8 +26,7 @@ if (!fs.existsSync(componentDir)) {
 }
 
 // Создаем основной файл компонента (.tsx)
-const componentContent = `import React from 'react';
-import cls from './${componentName}.module.css';
+const componentContent = `import cls from './${componentName}.module.css';
 
 export function ${componentName}() {
   return <></>;
