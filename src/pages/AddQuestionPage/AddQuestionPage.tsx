@@ -1,18 +1,69 @@
 import cls from './AddQuestionPage.module.css';
 import { Selector } from '../../components/Selector';
 import { Button } from '../../components/Button';
+import { useActionState } from 'react';
+import { delayFn } from '../../helpers/delayFn.tsx';
+import { toast } from 'react-toastify';
+import { API_URL } from '../../constants';
+
+type FormState = {
+    clearForm?: boolean;
+    question?: string;
+    answer?: string;
+    description?: string;
+    resources?: string[];
+    level?: number;
+};
+
+const createCardAction = async (_prevState: FormState, formData: FormData): Promise<FormState> => {
+    try {
+        await delayFn();
+        console.log(Object.fromEntries(formData));
+        const newQuestion = Object.fromEntries(formData);
+        const resources = newQuestion.resources.toString().trim();
+        const isClearForm = Boolean(newQuestion.clearForm);
+
+        const response = await fetch(`${API_URL}/react`, {
+            method: 'POST',
+            body: JSON.stringify({
+                question: newQuestion.question,
+                answer: newQuestion.answer,
+                description: newQuestion.description,
+                resources: resources.length ? resources.split(',').map((p) => p.trim()) : [],
+                level: Number(newQuestion.level),
+                completed: false,
+                editDate: undefined,
+            }),
+        });
+
+        const question = await response.json();
+        toast.success('Question added successfully');
+
+        return isClearForm ? {} : question;
+    } catch (error) {
+        if (error instanceof Error) toast.error(error.message);
+        return { clearForm: false };
+    }
+};
 
 export function AddQuestionPage() {
+    const [formState, formAction, isPending] = useActionState<FormState, FormData>(
+        createCardAction,
+        {
+            clearForm: true,
+        },
+    );
+
     return (
         <>
             <h1 className={cls.formTitle}>Add New Question</h1>
 
             <div className={cls.formContainer}>
-                <form action={''} className={cls.form}>
+                <form action={formAction} className={cls.form}>
                     <div className={cls.formControl}>
                         <label htmlFor="questionField">Question: </label>
                         <textarea
-                            defaultValue={'defaultV'}
+                            defaultValue={formState.question}
                             name="question"
                             id="questionField"
                             cols={30}
@@ -25,7 +76,7 @@ export function AddQuestionPage() {
                     <div className={cls.formControl}>
                         <label htmlFor="answerField">Short answer: </label>
                         <textarea
-                            defaultValue={'defaultV'}
+                            defaultValue={formState.answer}
                             name="answer"
                             id="answerField"
                             cols={30}
@@ -38,7 +89,7 @@ export function AddQuestionPage() {
                     <div className={cls.formControl}>
                         <label htmlFor="descriptionField">Description: </label>
                         <textarea
-                            defaultValue={'defaultV'}
+                            defaultValue={formState.description}
                             name="description"
                             id="descriptionField"
                             cols={30}
@@ -51,7 +102,7 @@ export function AddQuestionPage() {
                     <div className={cls.formControl}>
                         <label htmlFor="descriptionField">Resources: </label>
                         <textarea
-                            defaultValue={'defaultV'}
+                            defaultValue={formState.resources?.join(', ')}
                             name="resources"
                             id="resourcesField"
                             cols={30}
@@ -68,7 +119,7 @@ export function AddQuestionPage() {
                             id="levelField"
                             header={'Question Level'}
                             headerDisabled={true}
-                            defaultVault={'defaultV'}
+                            defaultVault={formState.level?.toString()}
                             options={[
                                 { value: '1', content: '1 - easiest' },
                                 { value: '2', content: '2 - medium' },
@@ -83,12 +134,12 @@ export function AddQuestionPage() {
                             type="checkbox"
                             name="clearForm"
                             id="clearFormField"
-                            defaultValue={'true'}
+                            defaultChecked={formState.clearForm}
                         />
                         <span>Clear Form after submitting?</span>
                     </label>
 
-                    <Button>Add Question</Button>
+                    <Button isDisabled={isPending}>Add Question</Button>
                 </form>
             </div>
         </>
