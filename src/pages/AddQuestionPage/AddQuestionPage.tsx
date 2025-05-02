@@ -36,6 +36,10 @@ const createCardAction = async (_prevState: FormState, formData: FormData): Prom
             }),
         });
 
+        if (!response.ok) {
+            throw new Error(response.statusText);
+        }
+
         const question = await response.json();
         toast.success('Question added successfully');
 
