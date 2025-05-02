@@ -51,7 +51,7 @@ const createCardAction = async (_prevState: FormState, formData: FormData): Prom
     }
 };
 
-export function AddQuestionPage() {
+const AddQuestionPage = () => {
     const [formState, formAction, isPending] = useActionState<FormState, FormData>(
         createCardAction,
         {
@@ -152,4 +152,6 @@ export function AddQuestionPage() {
             </div>
         </>
     );
-}
+};
+
+export default AddQuestionPage;
