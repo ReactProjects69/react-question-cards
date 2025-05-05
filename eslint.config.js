@@ -24,6 +24,7 @@ export default defineConfig([
             'react/jsx-no-target-blank': 'warn',
             'react/react-in-jsx-scope': 'off',
             'react/display-name': 'warn',
+            'no-console': 'error',
             'prettier/prettier': [
                 'error',
                 {

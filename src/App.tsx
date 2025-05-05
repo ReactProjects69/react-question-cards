@@ -1,7 +1,7 @@
 import { MainLayout } from './components/MainLayout';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
-import { NotFoundPage } from './pages/NotFoundPAge';
+import { NotFoundPage } from './pages/NotFoundPage';
 import { QuestionPage } from './pages/QuestionPage';
 import { AddQuestionPageLazy } from './pages/AddQuestionPage';
 

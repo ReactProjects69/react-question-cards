@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, SelectHTMLAttributes } from 'react';
 import cls from './Selector.module.css';
 import { SelectorOption } from '../../models/SelectorOption.ts';
 
@@ -11,30 +11,36 @@ type SelectorProps = {
     headerDisabled: boolean;
     options?: SelectorOption[];
     className?: string;
-    defaultVault?: string;
+    defaultValue?: string;
 };
 
 export function Selector(props: SelectorProps) {
+    const { id, name, value, onChange, header, headerDisabled, options, className, defaultValue } =
+        props;
+
+    const selectProps: SelectHTMLAttributes<HTMLSelectElement> = {
+        onChange,
+        className: className || cls.selector,
+        id,
+        name,
+    };
+
+    if (value !== undefined) {
+        selectProps.value = value;
+    } else if (defaultValue !== undefined) {
+        selectProps.defaultValue = defaultValue;
+    }
+
     return (
-        <select
-            value={props.value}
-            onChange={props.onChange}
-            className={props.className || cls.selector}
-            id={props.id}
-            name={props.name}
-            defaultValue={props.value}
-        >
-            <option disabled={props.headerDisabled} value="">
-                {props.header}
+        <select {...selectProps}>
+            <option disabled={headerDisabled} value="">
+                {header}
             </option>
-            <hr />
-            {props.options?.map((optionValue) => {
-                return (
-                    <option key={optionValue.value} value={optionValue.value}>
-                        {optionValue.content}
-                    </option>
-                );
-            })}
+            {options?.map((optionValue) => (
+                <option key={optionValue.value} value={optionValue.value}>
+                    {optionValue.content}
+                </option>
+            ))}
         </select>
     );
 }
