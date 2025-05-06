@@ -1,4 +1,5 @@
 ﻿export class FormState {
+    id?: string;
     clearForm?: boolean;
     question?: string;
     answer?: string;
