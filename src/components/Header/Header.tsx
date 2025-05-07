@@ -4,14 +4,15 @@ import cls from './Header.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth.ts';
 import { AUTH_STORAGE } from '../../constants';
+import { ThemeToggler } from '../../feature/ThemeToggler';
 
 export function Header() {
     const navigate = useNavigate();
-    const { isAuthenticated, setIsAuthenticated } = useAuth();
+    const { value, setValue } = useAuth();
 
     const loginHandler = () => {
-        localStorage.setItem(AUTH_STORAGE, (!isAuthenticated).toString());
-        setIsAuthenticated(!isAuthenticated);
+        localStorage.setItem(AUTH_STORAGE, (!value).toString());
+        setValue(!value);
     };
 
     return (
@@ -22,9 +23,10 @@ export function Header() {
             </p>
 
             <div className={cls.headerButtons}>
-                {isAuthenticated && <Button onClick={() => navigate('/addquestion')}>Add</Button>}
-                <Button onClick={loginHandler} isActive={!isAuthenticated}>
-                    {isAuthenticated ? 'Logout' : 'Login'}
+                <ThemeToggler />
+                {value && <Button onClick={() => navigate('/addquestion')}>Add</Button>}
+                <Button onClick={loginHandler} isActive={!value}>
+                    {value ? 'Logout' : 'Login'}
                 </Button>
             </div>
         </header>

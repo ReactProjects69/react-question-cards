@@ -1,10 +1,10 @@
 import { createContext, ReactNode, useState } from 'react';
-import { AuthContextType } from '../../models/AuthContextType.ts';
 import { AUTH_STORAGE } from '../../constants';
+import { ContextModel } from '../../models/ContextModel.ts';
 
-export const AuthContext = createContext<AuthContextType>({
-    isAuthenticated: false,
-    setIsAuthenticated: () => {
+export const AuthContext = createContext<ContextModel<boolean>>({
+    value: false,
+    setValue: () => {
         return {};
     },
 });
@@ -18,7 +18,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const [isAuthenticated, setIsAuthenticated] = useState(isLogin);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+        <AuthContext.Provider value={{ value: isAuthenticated, setValue: setIsAuthenticated }}>
             {children}
         </AuthContext.Provider>
     );
