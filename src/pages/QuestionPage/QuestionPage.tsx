@@ -8,11 +8,13 @@ import { API_URL } from '../../constants';
 import { QuestionCardType } from '../../models/QuestionCardType.ts';
 import { Loader } from '../../components/Loader';
 import { SmallLoader } from '../../components/SmallLoader';
+import { useAuth } from '../../hooks/useAuth.ts';
 
 export function QuestionPage() {
     const checkboxId = useId();
     const navigate = useNavigate();
     const { id } = useParams();
+    const { isAuthenticated } = useAuth();
 
     const [card, setCard] = useState<QuestionCardType | null>(null);
     const [isChecked, setChecked] = useState(false);
@@ -119,12 +121,14 @@ export function QuestionPage() {
                 {isCardUpdating && <SmallLoader />}
             </label>
 
-            <Button
-                onClick={() => navigate(`/editquestion/${card.id}`)}
-                isDisabled={isCardUpdating}
-            >
-                Edit Question
-            </Button>
+            {isAuthenticated && (
+                <Button
+                    onClick={() => navigate(`/editquestion/${card.id}`)}
+                    isDisabled={isCardUpdating}
+                >
+                    Edit Question
+                </Button>
+            )}
             <Button onClick={() => navigate('/')} isDisabled={isCardUpdating}>
                 Back
             </Button>

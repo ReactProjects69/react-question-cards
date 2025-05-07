@@ -2,9 +2,18 @@
 import { Button } from '../Button';
 import cls from './Header.module.css';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth.ts';
+import { AUTH_STORAGE } from '../../constants';
 
 export function Header() {
     const navigate = useNavigate();
+    const { isAuthenticated, setIsAuthenticated } = useAuth();
+
+    const loginHandler = () => {
+        localStorage.setItem(AUTH_STORAGE, (!isAuthenticated).toString());
+        setIsAuthenticated(!isAuthenticated);
+    };
+
     return (
         <header className={cls.header}>
             <p onClick={() => navigate('/')}>
@@ -13,10 +22,10 @@ export function Header() {
             </p>
 
             <div className={cls.headerButtons}>
-                <Button isActive onClick={() => navigate('/addquestion')}>
-                    Add
+                {isAuthenticated && <Button onClick={() => navigate('/addquestion')}>Add</Button>}
+                <Button onClick={loginHandler} isActive={!isAuthenticated}>
+                    {isAuthenticated ? 'Logout' : 'Login'}
                 </Button>
-                <Button>Login</Button>
             </div>
         </header>
     );

@@ -18,7 +18,8 @@ if (!componentName) {
 
 // Создаем директорию для компонента
 const projectRoot = path.resolve(__dirname, '..');
-const componentDir = path.join(projectRoot, 'src', 'components', componentName);
+const selectedFolder = process.argv[3] ?? path.join(projectRoot, 'src', 'components');
+const componentDir = path.join(selectedFolder, componentName);
 
 if (!fs.existsSync(componentDir)) {
     fs.mkdirSync(componentDir, { recursive: true });
