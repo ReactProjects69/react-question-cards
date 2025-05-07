@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { Loader } from '../../components/Loader';
 import { EditQuestion } from './EditQuestion.tsx';
 
-export function EditQuestionPage() {
+function EditQuestionPage() {
     const { id } = useParams();
     const [question, setQuestion] = useState<QuestionCardType | null>(null);
 
@@ -27,3 +27,5 @@ export function EditQuestionPage() {
 
     return <>{question && <EditQuestion initialState={question} />}</>;
 }
+
+export default EditQuestionPage;
