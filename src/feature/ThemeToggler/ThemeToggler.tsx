@@ -7,8 +7,15 @@ export const ThemeToggler: React.FC = () => {
     const { value, setValue } = useTheme();
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const updatedTheme = !e.target.checked ? 'light' : 'dark';
+        const isChecked = e.target.checked;
+        const updatedTheme = isChecked ? 'dark' : 'light';
         setValue(updatedTheme);
+
+        if (isChecked) {
+            document.body.classList.add('darkLayout');
+        } else {
+            document.body.classList.remove('darkLayout');
+        }
 
         localStorage.setItem(THEME_STORAGE, updatedTheme);
     };

@@ -38,16 +38,14 @@ body {
 }
 
 .darkLayout {
-    :root {
-        --main-bg-color: #23272F;
-        --text-color: #fff;
+    --main-bg-color: #23272F;
+    --text-color: #fff;
 
-        --btn-bg-color: #16444f;
-        --btn-text-color: #57C4DC;
+    --btn-bg-color: #16444f;
+    --btn-text-color: #57C4DC;
 
-        --card-bg-color: #343A46;
-        --green-color: #219679;
-    }
+    --card-bg-color: #343A46;
+    --green-color: #219679;
 }
 
 @media (prefers-color-scheme: dark) {
